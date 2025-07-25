@@ -1,6 +1,8 @@
-# 📦 Inventory Management Tool
+# 💰 FiMoney - Inventory Management Tool
 
-A full-stack **Inventory Management Application** for small businesses. Built with:
+**FiMoney** is a full-stack Inventory Management Application designed for small businesses.
+
+Built with:
 
 - **Backend**: Node.js, Express, MongoDB
 - **Frontend**: React, Tailwind CSS
@@ -111,6 +113,33 @@ File: `FiMoney.postman_collection.json` (at repo root)
 
 ---
 
+## 📂 API Routes & Functions
+
+### 🧑 Auth Routes
+
+| Method | Endpoint       | Description              | Auth Required |
+|--------|----------------|--------------------------|----------------|
+| POST   | `/register`     | Register a new user       | ❌ No          |
+| POST   | `/login`        | Login and get JWT token   | ❌ No          |
+
+---
+
+### 📦 Product Routes (Protected)
+
+> All routes below require JWT token in `Authorization` header:  
+> `Authorization: Bearer <token>`
+
+| Method | Endpoint             | Description                        |
+|--------|----------------------|------------------------------------|
+| GET    | `/products`          | Get paginated list of products     |
+| GET    | `/products/:id`      | Get a single product by ID         |
+| POST   | `/products`          | Create a new product               |
+| PUT    | `/products/:id`      | Update a product                   |
+| DELETE | `/products/:id`      | Delete a product                   |
+| PATCH  | `/products/:id/qty`  | Update product quantity only       |
+
+---
+
 ## 🧪 Automated API Test Script
 
 File: `test_api.py`
@@ -127,7 +156,7 @@ pip install requests
 python test_api.py
 ```
 
-> Tests include: registration, login, product creation, update, and listing.
+> Tests include: registration, login, product creation, quantity update, listing, and deletion.
 
 ---
 
