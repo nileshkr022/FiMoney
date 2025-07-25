@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/auth.js";
 import productRoutes from "./routes/products.js";
 import cors from "cors";
+import { swaggerUiMiddleware, swaggerUiSetup } from "./swagger.js";
 dotenv.config();
 
 const app = express();
@@ -20,6 +21,6 @@ app.use(cors());
 app.use("/", authRoutes);
 // Mount product routes as before
 app.use("/products", productRoutes);
-
+app.use("/api-docs", swaggerUiMiddleware, swaggerUiSetup);
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

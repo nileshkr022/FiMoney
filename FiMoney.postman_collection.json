@@ -1,0 +1,239 @@
+{
+	"info": {
+		"_postman_id": "b5fde300-b421-47e1-b646-dc3ef5b39ef0",
+		"name": "FiMoney",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40522231",
+		"_collection_link": "https://demo22-8334.postman.co/workspace/assignment~d7da5963-6b65-4676-b672-c4994c3a2ab2/collection/40522231-b5fde300-b421-47e1-b646-dc3ef5b39ef0?action=share&source=collection_link&creator=40522231"
+	},
+	"item": [
+		{
+			"name": "REG",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"postman\",\r\n  \"password\": \"postman\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "New Request",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"yourusername\",\r\n  \"password\": \"yourpassword\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'none'"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/html; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "148"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 24 Jul 2025 20:31:23 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "<!DOCTYPE html>\n<html lang=\"en\">\n    <head>\n        <meta charset=\"utf-8\">\n        <title>Error</title>\n    </head>\n    <body>\n        <pre>Cannot POST /register</pre>\n    </body>\n</html>"
+				}
+			]
+		},
+		{
+			"name": "LOGIN",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"postman\",\r\n  \"password\": \"postman\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ADD",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODgzYjgzMTAwZTI3ZjAwN2JkOTA0YjAiLCJ1c2VybmFtZSI6InBvc3RtYW4iLCJpYXQiOjE3NTM0NjI4ODEsImV4cCI6MTc1MzQ2NjQ4MX0.usFPJes65Ea6VHHzEML5bwxRokGwBvfD8qgrmwh32sw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"postman\",\r\n  \"type\": \"Electronics\",\r\n  \"sku\": \"po-011\",\r\n  \"image_url\": \"https://example.com/phone.jpg\",\r\n  \"description\": \"Latest Phone\",\r\n  \"quantity\": 5,\r\n  \"price\": 999.99\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODgzYjgzMTAwZTI3ZjAwN2JkOTA0YjAiLCJ1c2VybmFtZSI6InBvc3RtYW4iLCJpYXQiOjE3NTM0NjI4ODEsImV4cCI6MTc1MzQ2NjQ4MX0.usFPJes65Ea6VHHzEML5bwxRokGwBvfD8qgrmwh32sw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"quantity\": 15\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/products/6883b89600e27f007bd904b3/quantity",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"6883b89600e27f007bd904b3",
+						"quantity"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LIST",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODgzYjgzMTAwZTI3ZjAwN2JkOTA0YjAiLCJ1c2VybmFtZSI6InBvc3RtYW4iLCJpYXQiOjE3NTM0NjI4ODEsImV4cCI6MTc1MzQ2NjQ4MX0.usFPJes65Ea6VHHzEML5bwxRokGwBvfD8qgrmwh32sw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/products?page=1&limit=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

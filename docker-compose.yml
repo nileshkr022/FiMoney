@@ -1,0 +1,28 @@
+
+services:
+  backend:
+    build: ./inventory-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/inventory-db
+      - JWT_SECRET=5ff98e9c3c9c61f50a8fb8115050e7b4e4fefce5cb5fbd1a70284ff78982b2fe
+      - PORT=8080
+    depends_on:
+      - mongo
+  frontend:
+    build: ./inventory-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+  mongo:
+    image: mongo:5
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
