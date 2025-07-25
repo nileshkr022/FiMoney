@@ -25,7 +25,7 @@ A full-stack **Inventory Management Application** for small businesses. Built wi
 
 ```bash
 git clone https://github.com/YOUR-USERNAME/inventory-management-tool.git
-cd inventory-management-tool
+cd FiMoney
 ```
 
 ---
