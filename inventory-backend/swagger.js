@@ -1,4 +1,4 @@
-// swagger.js
+
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 
@@ -13,7 +13,7 @@ const options = {
     servers: [
       { url: "http://localhost:8080" }
     ],
-    components: {          // <-- Moved inside `definition`
+    components: {        
       securitySchemes: {
         bearerAuth: {
           type: 'http',
@@ -23,7 +23,7 @@ const options = {
       },
     },
   },
-  apis: ["./routes/*.js"], // path to your route files
+  apis: ["./routes/*.js"], 
 };
 
 export const swaggerSpec = swaggerJSDoc(options);

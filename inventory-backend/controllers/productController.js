@@ -1,4 +1,4 @@
-// controllers/productController.js
+
 import Product from "../models/product.js";
 import mongoose from "mongoose";
 

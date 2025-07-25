@@ -1,4 +1,4 @@
-// eslint.config.js
+
 export default [
   {
     ignores: [
@@ -16,7 +16,6 @@ export default [
     },
     plugins: {},
     rules: {
-      // Your rules here. Example:
       "no-unused-vars": "warn",
       "no-console": "off"
     }

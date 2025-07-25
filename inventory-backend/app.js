@@ -9,17 +9,12 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
-
-// Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
 app.use(cors());
-
-// Mount auth routes ONCE at root
 app.use("/", authRoutes);
-// Mount product routes as before
 app.use("/products", productRoutes);
 app.use("/api-docs", swaggerUiMiddleware, swaggerUiSetup);
 const PORT = process.env.PORT || 8080;
