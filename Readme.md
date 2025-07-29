@@ -1,93 +1,73 @@
 # 💰 FiMoney - Inventory Management Tool
 
-**FiMoney** is a full-stack Inventory Management Application designed for small businesses.
-
-Built with:
-
-- **Backend**: Node.js, Express, MongoDB
-- **Frontend**: React, Tailwind CSS
-- **Features**: JWT Auth, product inventory management, API docs, Dockerized setup
+A **full-stack Inventory Management Application** designed for small businesses.
 
 ---
 
-## ✨ Features
-
-- 🔐 Secure REST API with JWT Authentication  
-- 🧾 Full CRUD for products  
-- 📄 Pagination support  
-- 📘 OpenAPI/Swagger documentation  
-- 🐳 Docker Compose for one-command startup  
-- 🧪 Postman collection and automated test script  
+## 🏗️ Tech Stack
+- **Backend**: Node.js, Express, MongoDB (Mongoose)
+- **Frontend**: React, Tailwind CSS
+- **Auth**: JWT (JSON Web Token)
+- **Docs**: Swagger/OpenAPI (`/api-docs`)
+- **DevOps**: Docker, Docker Compose
 
 ---
 
 ## 🚀 Quick Start
 
-### 1. Clone the Repo
-
+### 1. Clone the Repository
 ```bash
 git clone https://github.com/YOUR-USERNAME/FiMoney.git
 cd FiMoney
 ```
 
----
-
 ### 2. Backend Setup
-
 ```bash
 cd inventory-backend
-cp .env.example .env        # Edit .env with your own values
+cp .env.example .env   # Edit .env with your own values
 npm install
-npm run dev                 # Or: npm start
+npm run dev            # Or: npm start
 ```
 
----
+#### `.env.example`
+```
+MONGO_URI=mongodb://mongo:27017/inventory-db
+JWT_SECRET=your-very-strong-secret
+PORT=8080
+```
 
 ### 3. Frontend Setup
-
 ```bash
 cd ../inventory-frontend
 npm install
 npm start
 ```
 
----
-
-### 4. Run with Docker (Recommended)
-
-At the repo root (requires Docker Desktop):
-
+### 4. Running Everything with Docker (Recommended)
+At the project root:
 ```bash
 docker-compose up --build
 ```
 
-- Frontend: http://localhost:3000  
-- Backend API: http://localhost:8080  
-- Swagger Docs: http://localhost:8080/api-docs  
+- **Frontend**: [http://localhost:3000](http://localhost:3000)  
+- **Backend API**: [http://localhost:8080](http://localhost:8080)  
+- **Swagger Docs**: [http://localhost:8080/api-docs](http://localhost:8080/api-docs)  
 
 ---
 
-## 🗄️ Environment Variables
-
-### Backend `.env.example`
-
-```env
-MONGO_URI=mongodb://mongo:27017/inventory-db
-JWT_SECRET=your-very-strong-secret
-PORT=8080
-```
-
-> Make sure to update `.env` with your production or development values.
+## ✉️ Environment Variables
+Configure environment variables for backend and frontend using `.env.example` files in respective folders.  
+Edit `.env` with your actual values before running.
 
 ---
 
 ## 🔑 API Authentication
 
-- **Register** → `POST /register`
-- **Login** → `POST /login` (returns `access_token` as JWT)
+- **Register**: `POST /register` (No auth required)  
+- **Login**: `POST /login` (returns JWT as `access_token`)  
 
-Use JWT token in protected requests:
-
+### Protected Requests:
+Add header:
 ```
 Authorization: Bearer <token>
 ```
@@ -95,105 +75,93 @@ Authorization: Bearer <token>
 ---
 
 ## 📚 API Documentation
-
-- Swagger UI: [http://localhost:8080/api-docs](http://localhost:8080/api-docs)  
-  Describes all endpoints, request/response bodies, and authentication.
+- **Swagger UI**: [http://localhost:8080/api-docs](http://localhost:8080/api-docs)  
+- Interactive endpoint docs with "Try it out" / "Execute" support.  
+- Includes request/response schemas, status codes, and JWT usage.
 
 ---
 
 ## 📬 Postman Collection
-
-File: `FiMoney.postman_collection.json` (at repo root)
+- **File**: `FiMoney.postman_collection.json` (at repo root)  
 
 ### Usage:
-
-1. Import into Postman  
-2. Use `/login` to obtain JWT  
-3. Set JWT as `Bearer Token` in the Authorization header  
+1. Import into Postman.  
+2. Use `/login` to obtain a JWT.  
+3. For protected endpoints, set `Authorization: Bearer <token>` in headers.  
 
 ---
 
 ## 📂 API Routes & Functions
 
-### 🧑 Auth Routes
+### Auth Routes
+| Method | Endpoint   | Description        | Auth Required |
+|--------|------------|---------------------|---------------|
+| POST   | `/register`| Register a new user| ❌ No          |
+| POST   | `/login`   | Login and get JWT  | ❌ No          |
 
-| Method | Endpoint       | Description              | Auth Required |
-|--------|----------------|--------------------------|----------------|
-| POST   | `/register`     | Register a new user       | ❌ No          |
-| POST   | `/login`        | Login and get JWT token   | ❌ No          |
-
----
-
-### 📦 Product Routes (Protected)
-
-> All routes below require JWT token in `Authorization` header:  
-> `Authorization: Bearer <token>`
-
-| Method | Endpoint             | Description                        |
-|--------|----------------------|------------------------------------|
-| GET    | `/products`          | Get paginated list of products     |
-| GET    | `/products/:id`      | Get a single product by ID         |
-| POST   | `/products`          | Create a new product               |
-| PUT    | `/products/:id`      | Update a product                   |
-| DELETE | `/products/:id`      | Delete a product                   |
-| PATCH  | `/products/:id/qty`  | Update product quantity only       |
+### Product Routes (JWT REQUIRED)
+| Method | Endpoint            | Description                 |
+|--------|----------------------|-----------------------------|
+| GET    | `/products`         | Get paginated list of products |
+| POST   | `/products`         | Create a new product        |
+| PUT    | `/products/{id}`    | Update a product            |
+| DELETE | `/products/{id}`    | Delete a product            |
+| PATCH  | `/products/{id}/qty`| Update product quantity only|
+| GET    | `/products/{id}`    | Get a single product by ID  |
 
 ---
 
 ## 🧪 Automated API Test Script
+- **File**: `test_api.py`
 
-File: `test_api.py`
+### Requirements:
+- Python 3.6+  
+- `requests` library  
 
-### Requirements
-
-- Python 3.6+
-- `requests` library
-
-### Run Test
-
+### How to Run:
 ```bash
 pip install requests
 python test_api.py
 ```
 
-> Tests include: registration, login, product creation, quantity update, listing, and deletion.
+Tests include user registration, login, product creation, updating quantity, and product listing.  
+> Ensure backend is running before executing the tests.
 
 ---
 
-## 🏗️ Database Initialization
-
-- MongoDB collections auto-create on first run via Mongoose models.
-- Optionally, create a `seeds.js` in `inventory-backend/` to populate initial data.
-- Or use the API endpoints manually to register, login, and add products.
+## 🛠️ Database Initialization
+- **Default**: Collections auto-created on first run via Mongoose schemas.  
+- **Optional**:
+  - Add sample data by creating a `seeds.js` in `inventory-backend/` and run it with Node.
+  - Or use API/Postman to add products/users.
 
 ---
 
 ## 🗂️ Project Structure
-
-```bash
+```
 .
-├── inventory-backend/         # Express API, MongoDB models, routes, Swagger
-├── inventory-frontend/        # React + Tailwind frontend
-├── test_api.py                # API test script
-├── FiMoney.postman_collection.json  # Postman collection
-├── README.md                  # This file
-└── seeds.js (optional)        # Optional DB seeder
+├── inventory-backend/             # Express API, models, routes, Swagger config
+├── inventory-frontend/            # React + Tailwind frontend
+├── test_api.py                    # API test script
+├── FiMoney.postman_collection.json# Postman collection
+├── README.md                      # This file
+└── seeds.js (optional)            # Optional DB seeder (for dev/test)
 ```
 
 ---
 
 ## 🐳 Docker Usage
 
+### Start Full Stack:
 ```bash
 docker-compose up --build
 ```
 
-- **Frontend**: http://localhost:3000  
-- **Backend API**: http://localhost:8080  
-- **MongoDB**: mongodb://localhost:27017  
+- **Frontend**: [http://localhost:3000](http://localhost:3000)  
+- **Backend**: [http://localhost:8080](http://localhost:8080)  
+- **MongoDB**: `mongodb://localhost:27017`  
 
-To stop:
-
+### Stop All Services:
 ```bash
 docker-compose down
 ```
@@ -202,12 +170,12 @@ docker-compose down
 
 ## 🛡️ Troubleshooting
 
-| Problem                  | Solution                                                  |
-|--------------------------|-----------------------------------------------------------|
-| Cannot connect to API    | Ensure backend is running and correct port is used        |
-| MongoDB connection error | Check `.env` and confirm MongoDB service is up            |
-| CORS error in frontend   | Backend includes proper CORS middleware                   |
-| Test script fails        | Check backend logs and confirm endpoints are functional   |
-| Postman 401 Unauthorized | Ensure JWT is correctly set in `Authorization` header     |
+| Problem                    | Solution                                         |
+|----------------------------|--------------------------------------------------|
+| Cannot connect to API      | Ensure backend is running and correct port is used|
+| MongoDB connection error   | Check `.env` and confirm MongoDB service is up    |
+| CORS error in frontend     | Ensure backend has proper CORS middleware         |
+| Test script fails          | Check backend logs; confirm endpoints work        |
+| Postman 401 Unauthorized   | Ensure JWT is set in Authorization header         |
+| "Site can't be reached"    | Ensure containers are running and ports mapped    |
 
----

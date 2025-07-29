@@ -1,4 +1,3 @@
-# Use official Node image
 FROM node:18
 
 WORKDIR /usr/src/app

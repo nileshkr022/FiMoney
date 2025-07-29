@@ -1,28 +1,42 @@
 
 services:
-  backend:
-    build: ./inventory-backend
-    ports:
-      - "8080:8080"
-    environment:
-      - MONGO_URI=mongodb://mongo:27017/inventory-db
-      - JWT_SECRET=5ff98e9c3c9c61f50a8fb8115050e7b4e4fefce5cb5fbd1a70284ff78982b2fe
-      - PORT=8080
-    depends_on:
-      - mongo
-  frontend:
-    build: ./inventory-frontend
-    ports:
-      - "3000:80"
-    depends_on:
-      - backend
   mongo:
     image: mongo:5
     restart: always
     ports:
-      - "27017:27017"
+      - "27017:27017"            # Exposes DB to host for tools/compass
     volumes:
       - mongo-data:/data/db
+
+  backend:
+    build: ./inventory-backend   # Looks for Dockerfile in inventory-backend/
+    ports:
+      - "8080:8080"
+    environment:
+      - MONGO_URI=mongodb+srv://admin:admin@cluster0.g2nzolc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      - JWT_SECRET=5ff98e9c3c9c61f50a8fb8115050e7b4e4fefce5cb5fbd1a70284ff78982b2fe
+      - PORT=8080
+    depends_on:
+      - mongo
+    # Optional: Add healthcheck to wait for Mongo. (Advanced/CI)
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://mongo:27017"]
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 5
+
+  frontend:
+    build: ./inventory-frontend  # Looks for Dockerfile in inventory-frontend/
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    # Optionally, wait for backend to be ready:
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://backend:8080"]
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 5
 
 volumes:
   mongo-data:
