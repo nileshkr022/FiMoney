@@ -111,41 +111,21 @@ Authorization: Bearer <token>
 
 ---
 
-## 🧪 Automated API Test Script
-- **File**: `test_api.py`
-
-### Requirements:
-- Python 3.6+  
-- `requests` library  
-
-### How to Run:
-```bash
-pip install requests
-python test_api.py
-```
-
-Tests include user registration, login, product creation, updating quantity, and product listing.  
-> Ensure backend is running before executing the tests.
-
----
-
 ## 🛠️ Database Initialization
-- **Default**: Collections auto-created on first run via Mongoose schemas.  
-- **Optional**:
-  - Add sample data by creating a `seeds.js` in `inventory-backend/` and run it with Node.
-  - Or use API/Postman to add products/users.
+- Collections are **auto-created** on first run via Mongoose schemas.  
+- You can add products/users manually using the API or Postman.
 
 ---
 
 ## 🗂️ Project Structure
 ```
-.
+FIMONAEY/
 ├── inventory-backend/             # Express API, models, routes, Swagger config
 ├── inventory-frontend/            # React + Tailwind frontend
-├── test_api.py                    # API test script
+├── docker-compose.yml             # Docker Compose configuration
+├── Dockerfile                     # Root Dockerfile (multi-stage build)
 ├── FiMoney.postman_collection.json# Postman collection
-├── README.md                      # This file
-└── seeds.js (optional)            # Optional DB seeder (for dev/test)
+└── Readme.md                      # This file
 ```
 
 ---
@@ -168,6 +148,50 @@ docker-compose down
 
 ---
 
+## 🐋 Dockerfile (at Project Root)
+
+The root contains a **multi-stage Dockerfile** that builds the React frontend and bundles it with the backend in a single container:
+
+```dockerfile
+# ==============================
+# Stage 1: Build Frontend
+# ==============================
+FROM node:18-alpine AS frontend-build
+
+WORKDIR /app/frontend
+COPY inventory-frontend/package*.json ./
+RUN npm install
+COPY inventory-frontend/ ./
+RUN npm run build
+
+# ==============================
+# Stage 2: Build Backend
+# ==============================
+FROM node:18-alpine AS backend
+
+WORKDIR /app
+COPY inventory-backend/package*.json ./inventory-backend/
+RUN cd inventory-backend && npm install
+
+# Copy backend source
+COPY inventory-backend ./inventory-backend
+
+# Copy built frontend into backend's public directory
+COPY --from=frontend-build /app/frontend/dist ./inventory-backend/public
+
+WORKDIR /app/inventory-backend
+EXPOSE 8080
+CMD ["npm", "start"]
+```
+
+### Build & Run with Dockerfile:
+```bash
+docker build -t fimoney .
+docker run -p 8080:8080 fimoney
+```
+
+---
+
 ## 🛡️ Troubleshooting
 
 | Problem                    | Solution                                         |
@@ -175,7 +199,8 @@ docker-compose down
 | Cannot connect to API      | Ensure backend is running and correct port is used|
 | MongoDB connection error   | Check `.env` and confirm MongoDB service is up    |
 | CORS error in frontend     | Ensure backend has proper CORS middleware         |
-| Test script fails          | Check backend logs; confirm endpoints work        |
 | Postman 401 Unauthorized   | Ensure JWT is set in Authorization header         |
 | "Site can't be reached"    | Ensure containers are running and ports mapped    |
 
+---
+✅ **FiMoney is ready to use!** 🚀
